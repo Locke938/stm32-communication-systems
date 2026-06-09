@@ -28,8 +28,8 @@ Control STM32 LEDs from a PC through UART commands.
 
 Measure communication delay between STM32 and PC.
 
-### UART Throughput Test
+### STM32 UART Benchmark
 
-Evaluate UART transmission performance under different conditions.
+STM32 UART benchmark project comparing Polling, Interrupt transmission methods at various baud rates.
 
 ---
