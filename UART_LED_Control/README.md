@@ -2,12 +2,18 @@
 
 ## Overview
 
-This project implements a UART-based communication system between a PC and an STM32 microcontroller.
+This project implements a UART communication system between a Windows desktop application and an STM32F103C8T6 microcontroller.
 
-The STM32 receives commands from a serial terminal running on the PC and controls onboard LEDs according to the received commands.
+A custom GUI developed in Visual Studio allows users to send commands to the STM32 board, which controls the onboard PC13 LED and returns status information through UART communication.
 
-The project demonstrates the fundamentals of UART communication, command parsing, and peripheral control in embedded systems.
+The project demonstrates:
 
+- UART communication
+- Interrupt-based reception
+- PC application development
+- STM32 HAL drivers
+- Command parsing
+- Hardware control through software interfaces
 ---
 
 ## Objectives
