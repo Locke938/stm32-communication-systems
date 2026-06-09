@@ -66,7 +66,13 @@ The PC records:
 Latency is calculated as:
 
 ```text
-Latency = Response Time - Transmission Time
+Send Packet
+   │ ----------------> │
+   │                   │
+   │ <---------------- │
+Receive Echo
+
+Latency = t_receive - t_send
 ```
 
 ### Data Validation
@@ -121,9 +127,15 @@ Evaluate:
 | Error Count        | 899                   |
 | Test Duration      | 43 minutes 14 seconds |
 
+Error Count includes timeout events and communication failures observed during prolonged operation.
+---
 ### Performance Analysis
 
-The latency distribution remained concentrated around 5 ms throughout the test period.
+Most packets were processed within a narrow latency range around 5 ms.
+
+No significant latency drift was observed during normal operation.
+
+The main limitation encountered was related to the Windows Forms logging mechanism rather than the UART communication channel itself.
 
 The communication system maintained a success rate of approximately 98.8% under continuous operation.
 
@@ -210,4 +222,8 @@ Control and Automation Engineering
 
 ## Conclusion
 
-The UART communication system maintained high reliability during long-term operation with very low error rates.
+The system demonstrated stable UART communication over prolonged operation.
+
+Most communication errors were traced to limitations in the PC application's logging architecture rather than STM32 firmware execution.
+
+The project successfully highlighted both the capabilities and practical limitations of UART-based communication systems under continuous load.
