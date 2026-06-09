@@ -13,7 +13,6 @@ The objective is to implement, test, and evaluate UART and I2C communication pro
 - STM32
 - STM32CubeIDE
 - UART
-- I2C
 - HAL Drivers
 - C Programming
 
@@ -32,9 +31,5 @@ Measure communication delay between STM32 and PC.
 ### UART Throughput Test
 
 Evaluate UART transmission performance under different conditions.
-
-### I2C Communication
-
-Implement communication between STM32 and external devices using I2C.
 
 ---
