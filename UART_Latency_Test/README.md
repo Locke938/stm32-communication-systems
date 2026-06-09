@@ -2,58 +2,209 @@
 
 ## Overview
 
-This project measures the communication latency between a Windows PC and an STM32F103C8T6 microcontroller using UART communication.
+This project evaluates the communication latency between a Windows PC and an STM32F103C8T6 microcontroller using UART communication.
 
-The objective is to evaluate the response time of serial communication under continuous data transmission.
+A Windows Forms application continuously exchanges data with the STM32 through a USB-to-UART interface. The round-trip response time is measured and recorded to analyze communication performance, reliability, and long-term stability.
+
+The objective is to determine whether the communication system can maintain low latency and stable operation during prolonged stress testing.
 
 ---
 
 ## Hardware
 
-- STM32F103C8T6 Blue Pill
-- USB-UART Converter
-- PC
+### Devices
+
+* STM32F103C8T6 Blue Pill
+* USB-to-TTL Converter
+* Windows PC
+
+### Communication Parameters
+
+* UART Baud Rate: 115200 bps
+* Data Format: 8N1
+* Communication Mode: Interrupt-Based UART
 
 ---
 
 ## Software
 
-- STM32CubeIDE
-- STM32 HAL Driver
-- Visual Studio
-- UART Communication
+### STM32 Side
+
+* STM32CubeIDE
+* STM32 HAL Library
+* UART Interrupt Mode (`HAL_UART_Receive_IT()`)
+
+### PC Side
+
+* Visual Studio
+* C# Windows Forms
+* Stopwatch High-Precision Timer
 
 ---
 
-## Test Procedure
+## Test Methodology
 
-1. PC sends a data packet through UART.
-2. STM32 receives the packet.
-3. STM32 sends a response packet.
-4. PC records the transmission time.
-5. Latency is calculated and stored.
+### Communication Mechanism
+
+The PC continuously transmits a 26-character string:
+
+```text
+ABCDEFGHIJKLMNOPQRSTUVWXYZ
+```
+
+After receiving the complete packet, the STM32 immediately sends the same data back to the PC.
+
+This creates a bidirectional Echo Communication system.
+
+### Latency Measurement
+
+The PC records:
+
+1. Timestamp before transmission.
+2. Timestamp after receiving the complete response.
+
+Latency is calculated as:
+
+```text
+Latency = Response Time - Transmission Time
+```
+
+### Data Validation
+
+* Correct response → Success
+* Incorrect response → Mismatch
+* No response within timeout period → Timeout
 
 ---
 
-## Metrics
+## System Architecture
 
-The following metrics were collected:
+```text
+PC Application
+      │
+      │ UART
+      ▼
+STM32F103C8T6
+      │
+      │ Echo Response
+      ▼
+PC Application
+```
 
-- Minimum Latency
-- Maximum Latency
-- Average Latency
-- Number of Errors
+---
+
+## Stress Test Configuration
+
+### Test Goal
+
+Evaluate:
+
+* Communication Speed
+* Data Integrity
+* System Stability
+
+### Test Scenario
+
+* Continuous high-frequency transmission
+* Long-duration operation
+* Target workload: 180,000 packets
 
 ---
 
 ## Test Results
 
-Example:
+| Metric             | Result                |
+| ------------------ | --------------------- |
+| Total Packets Sent | 85,460                |
+| Successful Packets | 84,561                |
+| Average Latency    | 5.10 ms               |
+| Error Count        | 899                   |
+| Test Duration      | 43 minutes 14 seconds |
 
-- Total Packets: 112,000
-- Average Latency: 3.63 ms
-- Maximum Latency: 207 ms
-- Accuracy: 99.96%
+### Performance Analysis
+
+The latency distribution remained concentrated around 5 ms throughout the test period.
+
+The communication system maintained a success rate of approximately 98.8% under continuous operation.
+
+---
+
+## Failure Analysis
+
+### Observed Issue
+
+After prolonged execution, the Windows Forms application became unresponsive and eventually stopped processing incoming data.
+
+### Root Cause
+
+Investigation indicated that the issue was related to excessive UI logging.
+
+The application continuously appended messages to a RichTextBox control, causing increasing UI overhead. Combined with synchronous `Invoke()` calls from background threads, this eventually led to application slowdown and communication interruption.
+
+### Lessons Learned
+
+This issue demonstrated the importance of:
+
+* Thread-safe GUI updates
+* Log management
+* Asynchronous programming
+* Performance optimization for long-running applications
+
+---
+
+## Proposed Improvements
+
+### PC Application
+
+* Limit displayed log entries
+* Replace `Invoke()` with `BeginInvoke()`
+* Batch UI updates
+
+### STM32 Firmware
+
+* Handle UART Overrun Errors (ORE)
+* Improve buffer management
+* Explore DMA-based UART reception
+
+---
+
+## Skills Demonstrated
+
+* STM32 Embedded Programming
+* UART Communication
+* Interrupt-Based Reception
+* Windows Forms Development
+* Latency Measurement
+* Stress Testing
+* System Validation
+* Debugging and Failure Analysis
+
+---
+
+## Demonstration
+
+### Windows Application
+
+![GUI](Images/gui-main.png)
+
+### Stress Test Result
+
+![Stress Test](Images/stress-test.png)
+
+### STM32 Hardware Setup
+
+![Hardware](Images/bluepill-board.jpg)
+
+---
+
+## Author
+
+Phan Duc Hung
+
+Ho Chi Minh City University of Technology (HCMUT)
+
+Control and Automation Engineering
+
 
 ---
 
