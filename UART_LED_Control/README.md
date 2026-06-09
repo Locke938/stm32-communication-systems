@@ -233,16 +233,32 @@ UART_LED_Control
 
 ![Callback](Image/uart-callback.png)
 ---
+## Performance Evaluation
 
-## Testing Results
+### Long-Term Stress Test
 
-| Test Case | Result |
-|------------|------------|
-| LED_ON | Passed |
-| LED_OFF | Passed |
-| STATUS | Passed |
-| Invalid Command | Passed |
+- Commands transmitted: 112,000
+- Average latency: 3.63 ms
+- Accuracy: 99.96%
+- Error count: 16
 
+![Stress Test Result](Image/stress-test.png)
+
+The communication system maintained high reliability during prolonged operation with minimal packet errors.
+### Stress Test Results
+
+The system was evaluated using 112,000 command transmissions between the Windows application and STM32.
+
+Results:
+
+- Average latency: 3.63 ms
+- Maximum latency: 207 ms
+- Accuracy: 99.96%
+- Total detected errors: 16
+
+Most commands were processed within a few milliseconds. Occasional latency spikes were observed, likely due to operating system scheduling and serial driver buffering rather than UART hardware limitations.
+
+The test demonstrates reliable communication under prolonged operation.
 ---
 
 ## Challenges
