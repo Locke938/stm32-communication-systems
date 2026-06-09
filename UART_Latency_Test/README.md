@@ -128,7 +128,7 @@ Evaluate:
 | Test Duration      | 43 minutes 14 seconds |
 
 Error Count includes timeout events and communication failures observed during prolonged operation.
----
+
 ### Performance Analysis
 
 Most packets were processed within a narrow latency range around 5 ms.
