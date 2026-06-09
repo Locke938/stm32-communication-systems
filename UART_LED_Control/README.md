@@ -217,15 +217,15 @@ UART_LED_Control
 
 ### PC Application
 
-![GUI](Images/gui-main.png)
+![GUI](Image/gui-main.png)
 
 ### STM32 Hardware
 
-![Blue Pill](Images/bluepill-running.jpg)
+![Blue Pill](Image/bluepill-running.jpg)
 
 ### Interrupt-Based Reception
 
-![Callback](Images/uart-callback.png)
+![Callback](Image/uart-callback.png)
 ---
 
 ## Testing Results
